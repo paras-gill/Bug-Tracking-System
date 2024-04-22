@@ -1,0 +1,28 @@
+<!--This base template is to be used project-wide-->
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title> {% block title %} BTS {% endblock title %} </title>
+        <style>
+             body {
+                text-align: center; /* Center align the body content */
+            }
+
+            h1 {
+                display: inline-block;
+                border: 1px solid black; /* Add a thin black border */
+                padding: 10px; /* Add some padding for spacing */
+                margin: 0 auto;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Bug Tracking System</h1>
+        {%  if user.is_authenticated %}
+            <p style="text-align: center;">You are logged in as <u> {{ request.user.first_name }} {{ request.user.last_name }}</u> [{{request.user.role}}]. Click here to <a href="{% url 'logout' %}">log out</a></p>
+        {% endif %}
+
+        {% block content %} {% endblock content %}
+    </body>
+</html>

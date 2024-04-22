@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %} Upload Project {% endblock title %}
+
+{% block content %}
+<br>
+<h3 style="text-align: center;"> Upload Project </h3>
+
+{% if form.errors %}
+    <ul class="errorlist">
+        {% for error in form.non_field_errors %}
+            <li style="color: red;">{{ error }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+<form style="text-align: center;" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Upload</button>
+</form>
+{% endblock content %}
