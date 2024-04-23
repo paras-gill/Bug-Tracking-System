@@ -1,6 +1,6 @@
 '''
 Run this script using command: python manage.py assign_permissions.
-It will assign delete_project permission to 'admin101' user.
+It will assign delete_project and delete_bug permission to 'admin101' user.
 Only run it once, unless you are creating another user with role='Manager' who access manager homepage where he/she can delete projects. 
 '''
 
@@ -16,10 +16,12 @@ class Command(BaseCommand):
         # Retrieve the user object
         user = User.objects.get(username='admin101')
 
-        # Retrieve the permission object
-        permission = Permission.objects.get(codename='delete_project')
+        # Retrieve the permission objects
+        permission1 = Permission.objects.get(codename='delete_project')  # Permission to delete project
+        permission2 = Permission.objects.get(codename='delete_bug')   # Permission to delete bug
 
-        # Assign the permission to the user
-        user.user_permissions.add(permission)
+        # Assign the permissions to the user
+        user.user_permissions.add(permission1)
+        user.user_permissions.add(permission2)
 
         self.stdout.write(self.style.SUCCESS('Permission assigned successfully'))

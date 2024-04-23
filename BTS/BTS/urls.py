@@ -28,7 +28,8 @@ urlpatterns = [
     path('signup/', authentication.views.signup_page, name='signup'),
     path('managerHome/', manager.views.manager_home, name='managerHome'),
     path('managerHome/uploadCourse', manager.views.upload_project, name='uploadProject'),
-    path('delete/<int:project_id>/', authentication.views.delete_project, name='delete_project'),
+    path('deleteProject/<int:project_id>/', authentication.views.delete_project, name='deleteProject'),
     path('developerHome/', developer.views.developer_home, name='developerHome'),
     path('developerHome/fileBug', developer.views.file_bug, name='fileBug'),
+    path('deleteBug/<int:bug_id>/', authentication.views.delete_bug, name='deleteBug'),
 ]

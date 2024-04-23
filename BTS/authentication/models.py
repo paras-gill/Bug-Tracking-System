@@ -65,3 +65,10 @@ class User(AbstractUser):
 
 # Create custom permission for deleting projects
 Permission.objects.get_or_create(codename='delete_project', name='Can delete project')
+
+# If a permission with the specified codename doesn't exist, it creates one that's why get_or_create().
+
+# Create custom permission for deleting bugs
+Permission.objects.get_or_create(codename='delete_bug', name='Can delete bug')
+
+

@@ -7,7 +7,6 @@ class LoginForm(forms.Form):
     username = forms.CharField(max_length=254)
     password = forms.CharField(max_length=63, widget=forms.PasswordInput)
 
-
 class SignupForm(UserCreationForm):  
     class Meta(UserCreationForm.Meta):  
         model=get_user_model()  
