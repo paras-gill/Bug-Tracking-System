@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %} File Bug {% endblock title %}
+
+{% block content %}
+<br>
+<h3 style="text-align: center;"> File Bug </h3>
+
+{% if form.errors %}
+    <ul class="errorlist">
+        {% for error in form.non_field_errors %}
+            <li style="color: red;">{{ error }}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+
+<form style="text-align: center;" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">File Bug</button>
+</form>   
+    
+{% endblock content %}

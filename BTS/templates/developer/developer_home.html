@@ -1,7 +1,40 @@
 {% extends 'base.html' %}
 
+{% block title %} Developer Home {% endblock title %}
+
+
 {% block content %}
-    <p>You managed to log in! Welcome to developer homepage.</p>
+    <br>
+    <b>
+        <p style="display: inline-block; border: 1px solid black; padding: 10px; margin: 0 auto; text-align: center;">
+            File New Bug <a href="{% url 'fileBug' %}">Here</a>.
+        </p>
+    </b>    
+    <br>
+    <br>
+    <h3 style="text-align: center;">All Current Projects</h3>
+    <p style="text-align: center;"><i>(Click on the project to see all its bugs)</i></p>
+ 
+    <table id="project_table" border="1" style="margin: 10px auto; text-align: center;">
+        <thead>
+            <tr>
+                <th style="padding: 5px;">S.No.</th>
+                <th style="padding: 5px;">Project Name</th>
+                <th style="padding: 5px;">Date Added</th>
+                <th style="padding: 5px;">Bug Count</th>
+            </tr>
+        </thead>
+        <tbody>   
+                {% for project in projects %}  
+                        <tr>
+                            <td style="padding: 5px;"> {{forloop.counter}} </td>
+                            <td style="padding: 5px;"> {{project.project_name}} </td>
+                            <td style="padding: 5px;"> {{project.date_added.date}} </td>
+                            <td style="padding: 5px;"> {{project.bug_count}} </td>
+                        </tr>                   
+                {% endfor %}      
+        </tbody>
+    </table>
 {% endblock content %}
 
 
