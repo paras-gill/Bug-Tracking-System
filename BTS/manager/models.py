@@ -11,7 +11,7 @@ class Project(models.Model):
     date_added = models.DateTimeField(default=timezone.now)
     bug_count = models.IntegerField(default=0)
 
-    
+
 
 
 class Bug(models.Model):
@@ -31,9 +31,9 @@ class Bug(models.Model):
 
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     bug_title = models.CharField(max_length=100)
-    impact = models.CharField(max_length=10, choices=IMPACT_CHOICES)
+    impact = models.CharField(max_length=10, choices=IMPACT_CHOICES,  default='severe')
     submitted_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='submitted_bugs')
     date_submitted = models.DateTimeField()
-    status = models.BooleanField(default='Open', choices=STATUS_CHOICES)
+    status = models.CharField(max_length=10, default='Open', choices=STATUS_CHOICES)
     assign_to = models.ForeignKey(User, on_delete=models.CASCADE, related_name='assigned_bugs', null=True, blank=True)
     date_assigned = models.DateTimeField(null=True, blank=True)

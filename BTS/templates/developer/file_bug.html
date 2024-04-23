@@ -6,19 +6,30 @@
 <br>
 <h3 style="text-align: center;"> File Bug </h3>
 
-{% if form.errors %}
-    <ul class="errorlist">
-        {% for error in form.non_field_errors %}
-            <li style="color: red;">{{ error }}</li>
-        {% endfor %}
-    </ul>
-{% endif %}
+<div style="text-align: center;">
+    <form method="post" style="display: inline;">
+        {% csrf_token %}
 
+        <div>
+            {% for field in form %}
+                {% for error in field.errors %}
+                    <p>{{ error }}</p>
+                {% endfor %}
+            {% endfor %}
+        </div>
 
-<form style="text-align: center;" method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">File Bug</button>
-</form>   
-    
+        {{ form.as_p }}
+        <br>
+        <button type="submit">File Bug</button>
+    </form>   
+    <span style="margin-left: 50px;"></span> <!-- Add space between buttons -->
+    <button onclick="goBack()" style="display: inline;">Go Back</button>  <!-- Display both buttons in same line -->
+</div>
+
+<script>
+    function goBack() {
+    window.location.href = "{% url 'developerHome' %}";
+    }
+</script>
+ 
 {% endblock content %}
