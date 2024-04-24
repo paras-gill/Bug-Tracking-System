@@ -9,8 +9,16 @@ from django.utils import timezone
 def developer_home(request):
     projects=Project.objects.all()  # Query set of all projects
     bugs_assigned=Bug.objects.filter(assign_to=request.user.pk)
+    bugs_assigned_open=Bug.objects.filter(assign_to=request.user.pk, status='Open')
     bugs_submitted=Bug.objects.filter(submitted_by=request.user.pk)
-    context={'projects' : projects, 'bugs_assigned' : bugs_assigned, 'bugs_submitted' : bugs_submitted}
+    bugs_submitted_open=Bug.objects.filter(submitted_by=request.user.pk, status='Open')
+    context={
+        'projects' : projects, 
+        'bugs_assigned' : bugs_assigned, 
+        'bugs_assigned_open' : bugs_assigned_open,
+        'bugs_submitted' : bugs_submitted,
+        'bugs_submitted_open' : bugs_submitted_open,
+        }
     
     return render(request, 'developer/developer_home.html', context)
 

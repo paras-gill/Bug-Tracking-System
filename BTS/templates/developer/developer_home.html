@@ -15,8 +15,8 @@
     <br>
     <br>
 
-    <div>
-        <h3 style="text-align: center;">All Current Projects</h3>
+    <div id="all_projects">
+        <h3 style="text-align: center;"><u>All Current Projects</u></h3>
         <p style="text-align: center;"><i>(Click on the project to see all its bugs)</i></p>
     
         <table id="project_table" border="1" style="margin: 10px auto; text-align: center;">
@@ -44,9 +44,11 @@
     <br>
     <br >
     
-    <div>
-        <h3 style="text-align: center;">Bugs Assigned </h3>
-        <p style="text-align: center;">Total number of bugs assigned to you:<!--enter number--><br> Unresolved bugs left: <!--enter number--></p>
+    <div id="assigned_bugs">
+        <h3 style="text-align: center;"><u>Bugs Assigned To You</u></h3>
+        <p style="text-align: center;">
+            Total number of bugs assigned to you: <span style="color:blue;">{{bugs_assigned|length }}</span>
+            <br> Unresolved bugs left: <span style="color:red;">{{bugs_assigned_open|length }}</span></p>
     
         <table id="project_table" border="1" style="margin: 10px auto; text-align: center;">
             <thead>
@@ -79,9 +81,13 @@
     <br>
     <br>
 
-    <div>
-        <h3 style="text-align: center;">Bugs Submitted </h3>
-        <p style="text-align: center;">Total number of bugs submitted by you:<!--enter number--><br> Unresolved bugs left: <!--enter number--></p>
+    <div id="bugs_submitted">
+        <h3 style="text-align: center;"><u>Bugs Submitted By You</u></h3>
+        
+        <p style="text-align: center;">
+            Total number of bugs submitted by you: <span style="color:blue;">{{bugs_submitted|length}}</span>
+            <br> Unresolved bugs left: <span style="color:red;">{{bugs_submitted_open|length }}</span>
+        </p>
     
         <table id="project_table" border="1" style="margin: 10px auto; text-align: center;">
             <thead>
@@ -109,6 +115,7 @@
             </tbody>
         </table>
     </div>
+
 {% endblock content %}
 
 
