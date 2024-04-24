@@ -22,14 +22,20 @@ import developer.views
 import manager.views
 
 urlpatterns = [
+    # Authentication URL endpoints
     path('admin/', admin.site.urls),
     path('', authentication.views.login_page, name='login'),
     path('logout/', authentication.views.logout_user, name='logout'),
     path('signup/', authentication.views.signup_page, name='signup'),
+
+    # Manager URL endpoints
     path('managerHome/', manager.views.manager_home, name='managerHome'),
-    path('managerHome/uploadCourse', manager.views.upload_project, name='uploadProject'),
+    path('managerHome/uploadProject', manager.views.upload_project, name='uploadProject'),
+    path('managerHome/assignBug', manager.views.assign_bug, name='assignBug'),
     path('deleteProject/<int:project_id>/', authentication.views.delete_project, name='deleteProject'),
-    path('developerHome/', developer.views.developer_home, name='developerHome'),
-    path('developerHome/fileBug', developer.views.file_bug, name='fileBug'),
     path('deleteBug/<int:bug_id>/', authentication.views.delete_bug, name='deleteBug'),
+
+    # Developer URL endpoints
+    path('developerHome/', developer.views.developer_home, name='developerHome'),
+    path('developerHome/fileBug', developer.views.file_bug, name='fileBug'),  
 ]

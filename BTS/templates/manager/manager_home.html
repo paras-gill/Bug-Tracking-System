@@ -58,7 +58,7 @@
                             }
                         });
                     } else {// If bug count is not zero, display alert message
-                    alert('You cannot delete a project unless all its bugs have been resolved');
+                    alert('You cannot delete a project unless all its bugs have been resolved.');
                 }
                 });
             });
@@ -68,7 +68,7 @@
         <p style="text-align: center;">Upload New Project <a href="{% url 'uploadProject' %}">Here</a>.</p>
     </div>
     
-    <br>
+    
     <br>
 
     <div>
@@ -77,27 +77,27 @@
             <thead>
                 <tr>
                     <th style="padding: 5px;">S.No.</th>
-                    <th style="padding: 5px;">Project Name</th>
-                    <th style="padding: 5px;">Bug Title</th>
-                    <th style="padding: 5px;">Impact</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Project Name</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px;">Bug Title</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px;">Impact</th>
                     <th style="padding: 5px;">Submitted By</th>
                     <th style="padding: 5px;">Date Submitted</th>
-                    <th style="padding: 5px;">Status</th>
-                    <th style="padding: 5px;">Delete</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px;">Status</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px;">Delete</th>
                 </tr>
             </thead>
             
             <tbody>   
                     {% for bug in bugs %}  
                             <tr>
-                                <td style="padding: 5px;">{{forloop.counter}}</td>
-                                <td style="padding: 5px;">{{bug.project.project_name}}</td>
-                                <td style="padding: 5px;">{{bug.bug_title}}</td>
-                                <td style="padding: 5px;">{{bug.impact}}</td>
-                                <td style="padding: 5px;">{{bug.submitted_by.username}}</td>
-                                <td style="padding: 5px;">{{bug.date_submitted|date}}</td> <!--Applying date filter using | to submitted_date-->
-                                <td style="padding: 5px;">{{bug.status}}</td>
-                                <td style="padding: 5px;"><button class="delete-bug-btn" data-bug-id="{{ bug.id }}">Delete</button></td>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{bug.project.project_name}}</td>
+                                <td>{{bug.bug_title}}</td>
+                                <td>{{bug.impact}}</td>
+                                <td>{{bug.submitted_by.username}}</td>
+                                <td>{{bug.date_submitted|date}}</td> <!--Applying date filter using | to submitted_date-->
+                                <td>{{bug.status}}</td>
+                                <td><button class="delete-bug-btn" data-bug-id="{{ bug.id }}">Delete</button></td>
                             </tr>                   
                     {% endfor %}              
             </tbody>
@@ -136,6 +136,6 @@
             });
             </script>
 
-        <p style="text-align: center;">Click <a href="">Here</a> to Assign Bugs to Developers.</p>
+        <p style="text-align: center;">Click <a href="{% url 'assignBug' %}">Here</a> to Assign Bugs to Developers.</p>
     </div>
 {% endblock content %}

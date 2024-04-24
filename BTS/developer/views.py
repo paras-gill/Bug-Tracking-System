@@ -1,19 +1,22 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from . import forms
-from manager.models import Project
+from manager.models import Project, Bug
 from django.db.models import F
 from django.utils import timezone
 
 @login_required
 def developer_home(request):
     projects=Project.objects.all()  # Query set of all projects
-    context={'projects' : projects}
+    bugs_assigned=Bug.objects.filter(assign_to=request.user.pk)
+    bugs_submitted=Bug.objects.filter(submitted_by=request.user.pk)
+    context={'projects' : projects, 'bugs_assigned' : bugs_assigned, 'bugs_submitted' : bugs_submitted}
     
     return render(request, 'developer/developer_home.html', context)
 
 @login_required
 def file_bug(request):
+    message=''
     if request.method == 'POST':
         form = forms.BugForm(request.POST)
         if form.is_valid():
@@ -23,9 +26,9 @@ def file_bug(request):
             bug.save()
             project = bug.project
             Project.objects.filter(id=project.id).update(bug_count=F('bug_count') + 1)
-            return redirect('developerHome') 
-    else:
-        form = forms.BugForm()
-    return render(request, 'developer/file_bug.html', {'form': form})
+            message=f" Bug with title '{bug.bug_title}' successfully filed for '{bug.project}' project"
+    
+    form = forms.BugForm()
+    return render(request, 'developer/file_bug.html', {'form': form, 'message' : message})
 
 

@@ -5,36 +5,110 @@
 
 {% block content %}
     <br>
+    
     <b>
         <p style="display: inline-block; border: 1px solid black; padding: 10px; margin: 0 auto; text-align: center;">
             File New Bug <a href="{% url 'fileBug' %}">Here</a>.
         </p>
     </b>    
+    
     <br>
     <br>
-    <h3 style="text-align: center;">All Current Projects</h3>
-    <p style="text-align: center;"><i>(Click on the project to see all its bugs)</i></p>
- 
-    <table id="project_table" border="1" style="margin: 10px auto; text-align: center;">
-        <thead>
-            <tr>
-                <th style="padding: 5px;">S.No.</th>
-                <th style="padding: 5px;">Project Name</th>
-                <th style="padding: 5px;">Date Added</th>
-                <th style="padding: 5px;">Bug Count</th>
-            </tr>
-        </thead>
-        <tbody>   
-                {% for project in projects %}  
-                        <tr>
-                            <td style="padding: 5px;"> {{forloop.counter}} </td>
-                            <td style="padding: 5px;"> {{project.project_name}} </td>
-                            <td style="padding: 5px;"> {{project.date_added.date}} </td>
-                            <td style="padding: 5px;"> {{project.bug_count}} </td>
-                        </tr>                   
-                {% endfor %}      
-        </tbody>
-    </table>
+
+    <div>
+        <h3 style="text-align: center;">All Current Projects</h3>
+        <p style="text-align: center;"><i>(Click on the project to see all its bugs)</i></p>
+    
+        <table id="project_table" border="1" style="margin: 10px auto; text-align: center;">
+            <thead>
+                <tr>
+                    <th style="padding: 5px;">S.No.</th>
+                    <th style="padding: 5px;">Project Name</th>
+                    <th style="padding: 5px;">Date Added</th>
+                    <th style="padding: 5px;">Bug Count</th>
+                </tr>
+            </thead>
+            <tbody>   
+                    {% for project in projects %}  
+                            <tr>
+                                <td style="padding: 5px;"> {{forloop.counter}} </td>
+                                <td style="padding: 5px;"> {{project.project_name}} </td>
+                                <td style="padding: 5px;"> {{project.date_added.date}} </td>
+                                <td style="padding: 5px;"> {{project.bug_count}} </td>
+                            </tr>                   
+                    {% endfor %}      
+            </tbody>
+        </table>
+    </div>
+
+    <br>
+    <br >
+    
+    <div>
+        <h3 style="text-align: center;">Bugs Assigned </h3>
+        <p style="text-align: center;">Total number of bugs assigned to you:<!--enter number--><br> Unresolved bugs left: <!--enter number--></p>
+    
+        <table id="project_table" border="1" style="margin: 10px auto; text-align: center;">
+            <thead>
+                <tr>
+                    <th style="padding: 5px;">S.No.</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px"">Project Name</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px"">Bug</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px"">Impact</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px"">Date Assigned</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px"">Status</th>
+                    <th style="padding: 5px;">Resolve</th>
+                </tr>
+            </thead>
+            <tbody>   
+                    {% for bug in bugs_assigned %}  
+                            <tr>
+                                <td style="padding: 5px;"> {{forloop.counter}} </td>
+                                <td style="padding: 5px;"> {{bug.project}} </td>
+                                <td style="padding: 5px;"> {{bug.bug_title}} </td>
+                                <td style="padding: 5px;"> {{bug.impact}} </td>
+                                <td style="padding: 5px;"> {{bug.date_assigned|date}} </td>
+                                <td style="padding: 5px;"> {{bug.status}} </td>
+                                <td style="padding: 5px;"> <!--Create checkbox here--> </td>
+                            </tr>                   
+                    {% endfor %}      
+            </tbody>
+        </table>
+    </div>
+
+    <br>
+    <br>
+
+    <div>
+        <h3 style="text-align: center;">Bugs Submitted </h3>
+        <p style="text-align: center;">Total number of bugs submitted by you:<!--enter number--><br> Unresolved bugs left: <!--enter number--></p>
+    
+        <table id="project_table" border="1" style="margin: 10px auto; text-align: center;">
+            <thead>
+                <tr>
+                    <th style="padding: 5px;">S.No.</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px"">Project Name</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px"">Bug</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px"">Impact</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px"">Date Submitted</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px"">Status</th>
+                </tr>
+            </thead>
+            <tbody>   
+                    {% for bug in bugs_submitted %}  
+                            <tr>
+                                <td style="padding: 5px;"> {{forloop.counter}} </td>
+                                <td style="padding: 5px;"> {{bug.project}} </td>
+                                <td style="padding: 5px;"> {{bug.bug_title}} </td>
+                                <td style="padding: 5px;"> {{bug.impact}} </td>
+                                <td style="padding: 5px;"> {{bug.date_submitted|date}} </td>
+                                <td style="padding: 5px;"> {{bug.status}} </td>
+                    
+                            </tr>                   
+                    {% endfor %}      
+            </tbody>
+        </table>
+    </div>
 {% endblock content %}
 
 

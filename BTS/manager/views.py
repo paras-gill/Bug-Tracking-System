@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from . import forms
 from .models import Project, Bug
+from django.utils import timezone
 
 @login_required
 def manager_home(request):
@@ -21,6 +22,22 @@ def upload_project(request):
     else:
         form = forms.UploadProjectForm()
     return render(request, 'manager/upload_project.html', {'form': form})
+
+@login_required
+def assign_bug(request):
+    if request.method == 'POST':
+        form = forms.AssignBugForm(request.POST)
+        if form.is_valid():
+            bug=Bug.objects.get(pk=request.POST['project_bug'])
+            bug.assign_to = form.cleaned_data['assigned_to']
+            bug.date_assigned = timezone.now()
+            bug.save()
+            #project = bug.project
+            #Project.objects.filter(id=project.id).update(bug_count=F('bug_count') + 1)
+            return redirect('managerHome') 
+    else:
+        form = forms.AssignBugForm()
+    return render(request, 'manager/assign_bug.html', {'form': form})
 
 
 
