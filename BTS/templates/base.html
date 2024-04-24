@@ -20,7 +20,11 @@
     <body>
         <h1>Bug Tracking System</h1>
         {%  if user.is_authenticated %}
-            <p style="text-align: center;">You are logged in as <u> {{ request.user.first_name }} {{ request.user.last_name }}</u> [<i>{{request.user.role}}</i>]. Click here to <a href="{% url 'logout' %}">log out</a></p>
+            <p> 
+                <a href="{% url 'logout' %}">log out</a>
+                <br><br><br>
+                <span style="text-align: center; font-size: larger;">Welcome! {{ request.user.first_name }} {{ request.user.last_name }} [{{request.user.role}}].</span>
+            </p>
         {% endif %}
 
         {% block content %} {% endblock content %}

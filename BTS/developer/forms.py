@@ -25,3 +25,15 @@ class BugForm(forms.ModelForm):
                 raise forms.ValidationError("A bug with this title already exists in the selected project.")
 
             return cleaned_data
+    
+class ChangeStatusForm(forms.Form):  
+    resolve = forms.BooleanField(widget=forms.CheckboxInput(attrs={'label': False}), required=False) 
+
+    def clean(self,):
+        cleaned_data = super().clean()
+        
+        # If the checkbox is not in the cleaned_data, set it to False
+        if 'resolve' not in cleaned_data:
+            cleaned_data['resolve'] = False
+        
+        return cleaned_data

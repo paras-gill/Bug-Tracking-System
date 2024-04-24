@@ -3,8 +3,10 @@
 {% block title %} File Bug {% endblock title %}
 
 {% block content %}
+
 <br>
-<h3 style="text-align: center;"> File Bug Here </h3>
+
+<h3 style="text-align: center;"><u> File Bug Here </u></h3>
 
 {% if message %}
     {{message | safe}}   <!--safe keyword to render html inside message variable-->
@@ -26,13 +28,12 @@
     </form>   
     <span style="margin-left: 50px;"></span> <!-- Add space between buttons -->
     <button onclick="goBack()" style="display: inline;">Go Back</button>  <!-- Display both buttons in same -->
-</div>
-
-<script>
-    function goBack() {
-    window.location.href = "{% url 'developerHome' %}";
-    }
-</script>
-
     
+    <script>
+        function goBack() {
+        window.location.href = "{% url 'developerHome' %}";
+        }
+    </script>
+</div>
+  
 {% endblock content %}
