@@ -26,9 +26,17 @@ def file_bug(request):
             bug.save()
             project = bug.project
             Project.objects.filter(id=project.id).update(bug_count=F('bug_count') + 1)
-            message=f" Bug with title '{bug.bug_title}' successfully filed for '{bug.project}' project"
-    
+            message=f" <span style='color:blue;'> Bug with title <b>{bug.bug_title}</b> successfully filed for <b>{bug.project}</b> project </span>"
+        else:
+            message='<span style="color:red;"> A bug with this title already exists in the selected project.</span>'
+
     form = forms.BugForm()
     return render(request, 'developer/file_bug.html', {'form': form, 'message' : message})
+
+@login_required
+def change_status(request):
+    pass
+    #return redirect('developerHome')
+
 
 

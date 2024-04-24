@@ -7,7 +7,7 @@
 <h3 style="text-align: center;"> File Bug Here </h3>
 
 {% if message %}
-    <p style="color:blue;">{{message}}</p>
+    {{message | safe}}   <!--safe keyword to render html inside message variable-->
 {% endif %}
 
 <div style="text-align: center;">
