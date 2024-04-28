@@ -35,14 +35,20 @@
                 </tr>
             </thead>
             <tbody>   
-                    {% for project in projects %}  
-                            <tr>
-                                <td style="padding: 5px;"> {{forloop.counter}} </td>
-                                <td style="padding: 5px;"> <a href="{% url 'developer_projectBugs' project_id=project.id %}">{{project.project_name}}</a></td>
-                                <td style="padding: 5px;"> {{project.date_added.date}} </td>
-                                <td style="padding: 5px;"> {{project.bug_count}} </td>
-                            </tr>                   
-                    {% endfor %}      
+                    {% if projects %}
+                        {% for project in projects %}  
+                                <tr>
+                                    <td style="padding: 5px;"> {{forloop.counter}} </td>
+                                    <td style="padding: 5px;"> <a href="{% url 'developer_projectBugs' project_id=project.id %}">{{project.project_name}}</a></td>
+                                    <td style="padding: 5px;"> {{project.date_added.date}} </td>
+                                    <td style="padding: 5px;"> {{project.bug_count}} </td>
+                                </tr>                   
+                        {% endfor %}     
+                    {% else %}
+                        <tr>
+                            <td colspan="4" style="height:30px;">No projects</td>
+                        </tr>
+                    {% endif %} 
             </tbody>
         </table>
     </div>
@@ -71,28 +77,33 @@
                     </tr>
                 </thead>
                 <tbody> 
+                    {% if bugs_assigned %}
                         {% for bug in bugs_assigned %}  
-                                <tr>
-                                    <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{forloop.counter}} </td>
-                                    <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.project}} </td>
-                                    <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.bug_title}} </td>
-                                    <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> 
-                                    {% if bug.impact == 'Severe'%}
-                                        <span style="color:red;">{{bug.impact}}</span>
-                                    {% else %}
-                                        <span style="color:blue;">{{bug.impact}}</span>
-                                    {% endif %}
-                                    </td>
-                                    <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.date_assigned|date}} </td>
-                                    <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.status}} </td>
-                                    <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> 
+                            <tr>
+                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{forloop.counter}} </td>
+                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.project}} </td>
+                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.bug_title}} </td>
+                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> 
+                                {% if bug.impact == 'Severe'%}
+                                    <span style="color:red;">{{bug.impact}}</span>
+                                {% else %}
+                                    <span style="color:blue;">{{bug.impact}}</span>
+                                {% endif %}
+                                </td>
+                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.date_assigned|date}} </td>
+                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.status}} </td>
+                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> 
                                     {% if bug.status == 'Open' %}    
                                         <a href="{% url 'resolveBug' bug_id=bug.id %}">Change Status</a> 
-                                    {% endif %}
-                                        
-                                    </td>
+                                    {% endif %}    
+                                </td>
                                 </tr>                   
-                        {% endfor %}      
+                        {% endfor %} 
+                    {% else %}
+                        <tr>
+                            <td colspan="7" style="height:30px;">No bugs assigned</td>
+                        </tr>  
+                    {% endif %}
                 </tbody>
             </table>
         </div>
@@ -125,6 +136,7 @@
                 </tr>
             </thead>
             <tbody>   
+                    {% if bugs_submitted %}
                     {% for bug in bugs_submitted %}  
                             <tr>
                                 <td style="padding: 5px;"> {{forloop.counter}} </td>
@@ -141,10 +153,17 @@
                                 <td style="padding: 5px;"> {{bug.status}} </td>
                     
                             </tr>                   
-                    {% endfor %}      
+                    {% endfor %}  
+                    {% else %}
+                        <tr>
+                            <td colspan="6" style="height:30px;">No bug submitted</td>
+                        </tr>
+                    {% endif %}    
             </tbody>
         </table>
     </div>
+
+    <br><br><br><br><br><br><br>
 
 {% endblock content %}
 

@@ -22,6 +22,7 @@
                 </tr>
             </thead>
             <tbody>   
+                {% if projects %}
                     {% for project in projects %}  
                             <tr>
                                 <td style="padding: 5px;"> {{forloop.counter}} </td>
@@ -30,7 +31,12 @@
                                 <td style="padding: 5px;"> {{project.bug_count}} </td>
                                 <td style="padding: 5px;"> <button class="delete-project-btn" data-project-id="{{ project.id }}">Delete</button> </td>
                             </tr>                   
-                    {% endfor %}      
+                    {% endfor %} 
+                {% else %}
+                    <tr>
+                        <td colspan="5" style="height: 30px;">No projects</td>
+                    </tr>
+                {% endif %}     
             </tbody>
         </table>
 
@@ -88,24 +94,30 @@
             </thead>
             
             <tbody>   
+                {% if bugs %}
                     {% for bug in bugs %}  
-                            <tr>
-                                <td>{{forloop.counter}}</td>
-                                <td>{{bug.project.project_name}}</td>
-                                <td>{{bug.bug_title}}</td>
-                                <td>
-                                {% if bug.impact == 'Severe'%}
-                                    <span style="color:red;">{{bug.impact}}</span>
-                                {% else %}
-                                    <span style="color:blue;">{{bug.impact}}</span>
-                                {% endif %}
-                                </td>
-                                <td>{{bug.submitted_by.username}}</td>
-                                <td>{{bug.date_submitted|date}}</td> <!--Applying date filter using | to submitted_date-->
-                                <td>{{bug.status}}</td>
-                                <td><button class="delete-bug-btn" data-bug-id="{{ bug.id }}">Delete</button></td>
-                            </tr>                   
-                    {% endfor %}              
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{bug.project.project_name}}</td>
+                            <td>{{bug.bug_title}}</td>
+                            <td>
+                            {% if bug.impact == 'Severe'%}
+                                <span style="color:red;">{{bug.impact}}</span>
+                            {% else %}
+                                <span style="color:blue;">{{bug.impact}}</span>
+                            {% endif %}
+                            </td>
+                            <td>{{bug.submitted_by.username}}</td>
+                            <td>{{bug.date_submitted|date}}</td> <!--Applying date filter using | to submitted_date-->
+                            <td>{{bug.status}}</td>
+                            <td><button class="delete-bug-btn" data-bug-id="{{ bug.id }}">Delete</button></td>
+                        </tr>                   
+                    {% endfor %}  
+                {% else %}
+                    <tr>
+                        <td colspan="8" style="height: 30px;">No bugs</td>
+                    </tr>
+                {% endif %}            
             </tbody>
         </table>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -168,25 +180,31 @@
             </thead>
             
             <tbody>   
+                {% if bugs_assigned %}
                     {% for bug in bugs_assigned %}  
-                            <tr>
-                                <td>{{forloop.counter}}</td>
-                                <td>{{bug.project.project_name}}</td>
-                                <td>{{bug.bug_title}}</td>
-                               
-                                <td>
-                                {% if bug.impact == 'Severe'%}
-                                    <span style="color:red;">{{bug.impact}}</span>
-                                {% else %}
-                                    <span style="color:blue;">{{bug.impact}}</span>
-                                {% endif %}
-                                </td>
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+                            <td>{{bug.project.project_name}}</td>
+                            <td>{{bug.bug_title}}</td>
+                            
+                            <td>
+                            {% if bug.impact == 'Severe'%}
+                                <span style="color:red;">{{bug.impact}}</span>
+                            {% else %}
+                                <span style="color:blue;">{{bug.impact}}</span>
+                            {% endif %}
+                            </td>
 
-                                <td>{{bug.assign_to.username}}</td>
-                                <td>{{bug.date_assigned|date}}</td> <!--Applying date filter using | to submitted_date-->
-                                <td>{{bug.status}}</td>
-                            </tr>                   
-                    {% endfor %}              
+                            <td>{{bug.assign_to.username}}</td>
+                            <td>{{bug.date_assigned|date}}</td> <!--Applying date filter using | to submitted_date-->
+                            <td>{{bug.status}}</td>
+                        </tr>                   
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="7" style="height: 30px;">No bugs</td>
+                    </tr>
+                {% endif %}              
             </tbody>
         </table>  
     </div>
