@@ -94,10 +94,6 @@ Current developers and manager signed up can be found in ![users.xlsx](users.xls
 5. Commit your changes and push to your fork.
 6. Create a pull request.
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
 ## Contact
 
 For any inquiries or support, please contact [paras_gill@outlook.com](mailto:paras_gill@outlook.com).
