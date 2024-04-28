@@ -10,6 +10,8 @@ This Django project implements an authentication system where users can log in a
 
 The project uses a MySQL database as the default database in Django settings. It includes normalized model classes and a user flow to determine which users have access to specific functionalities. Many other database management systems can also be integrated with this project; more about that can be found here: https://docs.djangoproject.com/en/5.0/topics/install/#database-installation
 
+Current developers and manager signed up can be found in ![users.xlsx](users.xlsx)
+
 ## Screenshots
 
 
