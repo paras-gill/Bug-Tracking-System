@@ -45,7 +45,9 @@
             $(document).ready(function() {
                 $('.delete-project-btn').on('click', function() {
                     var projectId = $(this).data('project-id');
-                    var rowToRemove = $(this).closest('tr'); // Get the parent row of the delete button
+
+                    // Get the parent row of the delete button
+                    var rowToRemove = $(this).closest('tr'); 
                     
                     // Check if bug_count is zero
                     var bugCount = parseInt(rowToRemove.find('td:eq(3)').text().trim()); // Get the bug count from the fourth column
@@ -55,7 +57,9 @@
                             type: 'GET',
                             success: function(response) {
                                 if (response.success) {
-                                    rowToRemove.remove(); // Remove the row from the table
+                                    
+                                    // Remove the row from the table
+                                    rowToRemove.remove(); 
                                     console.log('Row deleted successfully');
                                 } else {
                                     console.error('Failed to delete row:', response);
@@ -65,7 +69,7 @@
                                 console.error('Error deleting row:', errorThrown);
                             }
                         });
-                    } else {// If bug count is not zero, display alert message
+                    } else {// When bug_count is not zero
                     alert('You cannot delete a project unless all its bugs have been resolved.');
                 }
                 });
@@ -124,37 +128,45 @@
         </table>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>  <!-- Include this jQuery library -->
         <script>
-            // AJAX request to delete bug
-            $(document).ready(function() {  //jQuery shorthand for executing code when the document is fully loaded and ready to be manipulated.
-                // Delete bug button click event
+            // AJAX request to delete bug. 
+            $(document).ready(function() {  //Execute code when the document is fully loaded and ready to be manipulated.
                 $('.delete-bug-btn').on('click', function() {
                     var bugId = $(this).data('bug-id');
-                    console.log('Bug ID:', bugId); // Log bugId value
-                    var rowToRemove = $(this).closest('tr'); // Get the parent row of the delete button
-                    var bugStatus = rowToRemove.find('td:eq(6)').text().trim(); // Get the bug count from the fourth column
-                    // Send Ajax request to delete bug
+                    console.log('Bug ID:', bugId); 
+                    
+                    // Get the parent row of the delete button
+                    var rowToRemove = $(this).closest('tr'); 
+
+                    // Get the bug count from the fourth column
+                    var bugStatus = rowToRemove.find('td:eq(6)').text().trim(); 
 
                     if (bugStatus === 'Closed') {
-                        $.ajax({   // This function in jQuery is used to perform an asynchronous HTTP (Ajax) request. It allows you to send and receive data from a server without refreshing the entire webpage.
+                        
+                        // Perform an asynchronous HTTP (Ajax) request i.e. send and receive data from a server without refreshing the entire webpage.
+                        $.ajax({   
                             
-                            // Now below two lines are responsible for sening request to view defined at this url
-                            url: '/deleteBug/' + bugId + '/',  // url to which AJAX request is sent
-                            type: 'GET',  // HTTP method used for the request
+                            // url to which AJAX request is sent
+                            url: '/deleteBug/' + bugId + '/',  
+                            type: 'GET',  
                             
-                            // Below code is reponsible for doing action depending on the response. Respective function gets executed (success or error). 
-                            success: function(response) {    // Specifies function to be executed if the request is successful. The response parameter contains the data returned from the server.
-                                if (response.success) {  //This checks if success property of response object is True.
-                                    rowToRemove.remove(); // Remove the row from the HTML table
+                            // Action depending on the response. Respective function gets executed (success or error). 
+                            success: function(response) {    
+                                
+                                //Check if success property of response object is True.
+                                if (response.success) {  
+                                    
+                                    // Remove the row from the HTML table
+                                    rowToRemove.remove(); 
                                     console.log('Row deleted successfully');
                                 } else {
                                     console.error('Failed to delete bug:', response);
                                 }
                             },
-                            error: function(xhr, textStatus, errorThrown) {  // function to be executed if the request encounters an error.    
+                            error: function(xhr, textStatus, errorThrown) {     
                                 console.error('Error deleting bug:', errorThrown);
                             }
                         });
-                } else {    // If bugStaus is 'Open', display this alert message
+                } else {    // when bugStaus is 'Open'
                     alert('You cannot delete a bug which is yet to be resolved');
                 }
                 });

@@ -16,13 +16,13 @@ Current developers and manager signed up can be found in ![users.xlsx](users.xls
 
 
 ![Login Page](screenshots/login_page.png)
-
+*Login Page*
 
 ![Developer Portal](screenshots/developer_portal.png)
-
+*Developer portal*
 
 ![Manager Portal](screenshots/manager_portal.png)
-
+*manager portal*
 
 ## Installation
 

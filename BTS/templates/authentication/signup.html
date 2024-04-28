@@ -2,10 +2,13 @@
 
 {% block content %}
     <br>
+    
     <h3>Sign Up</h3>
+    
     {% if form.errors %}
         {{ form.errors }}
     {% endif %}
+    
     <form method="post">
         {{ form.as_p }}
         {% csrf_token %}

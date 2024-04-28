@@ -4,10 +4,7 @@ from manager.models import Project
 
 
 class BugForm(forms.ModelForm):
-    
-    project = forms.ModelChoiceField(queryset = Project.objects.all(), empty_label =None) 
-    # empty_label = None makes sure there is no empty choice at the top of the dropdown menu.
-      
+    project = forms.ModelChoiceField(queryset = Project.objects.all(), empty_label =None)  
     impact = forms.ChoiceField(choices =[('', 'Select Impact')] + Bug.IMPACT_CHOICES, initial = '', required=True)
 
     class Meta:
