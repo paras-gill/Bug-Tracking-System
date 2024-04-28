@@ -1,22 +1,42 @@
 <!--This base template is to be used project-wide-->
 <!DOCTYPE html>
 <html lang="en">
+    
     <head>
         <meta charset="UTF-8">
         <title> {% block title %} BTS {% endblock title %} </title>
         <style>
-             body {
-                text-align: center; /* Center align the body content */
+            body {
+                text-align: center; 
             }
 
             h1 {
                 display: inline-block;
-                border: 1px solid black; /* Add a thin black border */
-                padding: 10px; /* Add some padding for spacing */
+                border: 1px solid black; 
+                padding: 10px; 
                 margin: 0 auto;
             }
+            
+            th, td {
+                padding: 5px;  
+                padding-left: 10px; 
+                padding-right: 10px
+            }
+
+            .wrapped-cell {
+                max-width: 200px;
+                word-wrap: break-word;
+            }
+
+            .boxed-paragraph {
+                display: inline-block;
+                border: 2px solid black; 
+                padding: 10px; 
+            }
+
         </style>
     </head>
+
     <body>
         <h1>Bug Tracking System</h1>
         {%  if user.is_authenticated %}
@@ -28,4 +48,5 @@
 
         {% block content %} {% endblock content %}
     </body>
+
 </html>

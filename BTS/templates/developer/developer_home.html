@@ -5,8 +5,10 @@
 
 {% block content %}
     <p style="text-align: center; font-size: larger;">Welcome {{user.role}}</p>
+    
     <br>
-    <div>
+
+    <div id="file_bug_button">
         <button onclick="fileBug()">File New Bug</button>
         <script>
             function fileBug() {
@@ -28,20 +30,20 @@
         <table id="project_table" border="1" style="margin: 10px auto; text-align: center;">
             <thead>
                 <tr>
-                    <th style="padding: 5px;">S. No.</th>
-                    <th style="padding: 5px;">Project Name</th>
-                    <th style="padding: 5px;">Date Added</th>
-                    <th style="padding: 5px;">Bug Count</th>
+                    <th>S. No.</th>
+                    <th>Project Name</th>
+                    <th>Date Added</th>
+                    <th>Bug Count</th>
                 </tr>
             </thead>
             <tbody>   
                     {% if projects %}
                         {% for project in projects %}  
                                 <tr>
-                                    <td style="padding: 5px;"> {{forloop.counter}} </td>
-                                    <td style="padding: 5px;"> <a href="{% url 'developer_projectBugs' project_id=project.id %}">{{project.project_name}}</a></td>
-                                    <td style="padding: 5px;"> {{project.date_added.date}} </td>
-                                    <td style="padding: 5px;"> {{project.bug_count}} </td>
+                                    <td> {{forloop.counter}} </td>
+                                    <td class="wrapped-cell"> <a href="{% url 'developer_projectBugs' project_id=project.id %}">{{project.project_name}}</a></td>
+                                    <td> {{project.date_added.date}} </td>
+                                    <td> {{project.bug_count}} </td>
                                 </tr>                   
                         {% endfor %}     
                     {% else %}
@@ -60,58 +62,53 @@
         <h4 style="text-align: center;"><u>Bugs Assigned To You</u></h4>
         <p style="text-align: center;">
             Total number of bugs assigned to you: <strong>{{bugs_assigned|length }}</strong>
-            <br> Unresolved bugs left: <strong>{{bugs_assigned_open|length }}</strong></p>
-    
-            
-        <div style="margin-right: 20px;">
-            <table id="project_table" border="1" style="margin: 10px auto; text-align: center;">
-                <thead>
+            <br> Unresolved bugs left: <strong>{{bugs_assigned_open|length }}</strong>
+        </p>
+
+        <table id="project_table" border="1" style="margin: 10px auto; text-align: center;">
+            <thead>
+                <tr>
+                    <th>S. No.</th>
+                    <th>Project Name</th>
+                    <th>Bug</th>
+                    <th>Impact</th>
+                    <th>Date Assigned</th>
+                    <th>Status</th>
+                    <th>Resolve</th>
+                </tr>
+            </thead>
+            <tbody> 
+                {% if bugs_assigned %}
+                    {% for bug in bugs_assigned %}  
                     <tr>
-                        <th style="padding: 5px;">S. No.</th>
-                        <th style="padding: 5px; padding-left: 20px; padding-right: 20px;">Project Name</th>
-                        <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Bug</th>
-                        <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Impact</th>
-                        <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Date Assigned</th>
-                        <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Status</th>
-                        <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Resolve</th>
-                    </tr>
-                </thead>
-                <tbody> 
-                    {% if bugs_assigned %}
-                        {% for bug in bugs_assigned %}  
-                            <tr>
-                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{forloop.counter}} </td>
-                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.project}} </td>
-                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.bug_title}} </td>
-                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> 
-                                {% if bug.impact == 'Severe'%}
-                                    <span style="color:red;">{{bug.impact}}</span>
-                                {% else %}
-                                    <span style="color:blue;">{{bug.impact}}</span>
-                                {% endif %}
-                                </td>
-                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.date_assigned|date}} </td>
-                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.status}} </td>
-                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> 
-                                    {% if bug.status == 'Open' %}    
-                                        <a href="{% url 'resolveBug' bug_id=bug.id %}">Change Status</a> 
-                                    {% endif %}    
-                                </td>
-                                </tr>                   
-                        {% endfor %} 
-                    {% else %}
-                        <tr>
-                            <td colspan="7" style="height:30px;">No bugs assigned</td>
-                        </tr>  
-                    {% endif %}
-                </tbody>
-            </table>
-        </div>
-    
-    </div>
-    
-    
-</div>
+                        <td> {{forloop.counter}} </td>
+                        <td class="wrapped-cell"> {{bug.project}} </td>
+                        <td class="wrapped-cell"> {{bug.bug_title}} </td>
+                        <td> 
+                        {% if bug.impact == 'Severe'%}
+                            <span style="color:red;">{{bug.impact}}</span>
+                        {% else %}
+                            <span style="color:blue;">{{bug.impact}}</span>
+                        {% endif %}
+                        </td>
+                        <td> {{bug.date_assigned|date}} </td>
+                        <td> {{bug.status}} </td>
+                        <td> 
+                            {% if bug.status == 'Open' %}    
+                                <a href="{% url 'resolveBug' bug_id=bug.id %}">Change Status</a> 
+                            {% endif %}    
+                        </td>
+                    </tr>                   
+                    {% endfor %} 
+                {% else %}
+                    <tr>
+                        <td colspan="7" style="height:30px;">No bugs assigned</td>
+                    </tr>  
+                {% endif %}
+            </tbody>
+        </table>    
+    </div>    
+
 
     <br>
     <br>
@@ -127,33 +124,33 @@
         <table id="project_table" border="1" style="margin: 10px auto; text-align: center;">
             <thead>
                 <tr>
-                    <th style="padding: 5px;">S. No.</th>
-                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Project Name</th>
-                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Bug</th>
-                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Impact</th>
-                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Date Submitted</th>
-                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Status</th>
+                    <th>S. No.</th>
+                    <th>Project Name</th>
+                    <th>Bug</th>
+                    <th>Impact</th>
+                    <th>Date Submitted</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>   
                     {% if bugs_submitted %}
-                    {% for bug in bugs_submitted %}  
+                        {% for bug in bugs_submitted %}  
                             <tr>
-                                <td style="padding: 5px;"> {{forloop.counter}} </td>
-                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px;"> {{bug.project}} </td>
-                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px;"> {{bug.bug_title}} </td>
-                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px;">
+                                <td> {{forloop.counter}} </td>
+                                <td class="wrapped-cell"> {{bug.project}} </td>
+                                <td class="wrapped-cell"> {{bug.bug_title}} </td>
+                                <td>
                                 {% if bug.impact == 'Severe'%}
                                     <span style="color:red;">{{bug.impact}}</span>
                                 {% else %}
                                     <span style="color:blue;">{{bug.impact}}</span>
                                 {% endif %} 
                                 </td>
-                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px;"> {{bug.date_submitted|date}} </td>
-                                <td style="padding: 5px;"> {{bug.status}} </td>
+                                <td> {{bug.date_submitted|date}} </td>
+                                <td> {{bug.status}} </td>
                     
                             </tr>                   
-                    {% endfor %}  
+                        {% endfor %}  
                     {% else %}
                         <tr>
                             <td colspan="6" style="height:30px;">No bug submitted</td>

@@ -7,29 +7,29 @@
 
     <br>
 
-    <div>
+    <div id="all_projects">
         <h3 style="text-align: center;">All Current Projects</h3>
         <p style="text-align: center;"><i>(Click on the project to see all its bugs)</i></p>
     
         <table id="project_table" border="1" style="margin: 10px auto; text-align: center;">
             <thead>
                 <tr>
-                    <th style="padding: 5px;  padding-left: 20px; padding-right: 20px">S. No.</th>
-                    <th style="padding: 5px;  padding-left: 20px; padding-right: 20px">Project Name</th>
-                    <th style="padding: 5px;  padding-left: 20px; padding-right: 20px">Date Added</th>
-                    <th style="padding: 5px;  padding-left: 20px; padding-right: 20px">Bug Count</th>
-                    <th style="padding: 5px;  padding-left: 20px; padding-right: 20px">Delete</th>
+                    <th>S. No.</th>
+                    <th>Project Name</th>
+                    <th>Date Added</th>
+                    <th>Bug Count</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             <tbody>   
                 {% if projects %}
                     {% for project in projects %}  
                             <tr>
-                                <td style="padding: 5px;  padding-left: 20px; padding-right: 20px"> {{forloop.counter}} </td>
-                                <td style="padding: 5px;  padding-left: 20px; padding-right: 20px"> <a href="{% url 'manager_projectBugs' project_id=project.id %}">{{project.project_name}}</a> </td>
-                                <td style="padding: 5px;  padding-left: 20px; padding-right: 20px"> {{project.date_added.date}} </td>
-                                <td style="padding: 5px;  padding-left: 20px; padding-right: 20px"> {{project.bug_count}} </td>
-                                <td style="padding: 5px;  padding-left: 20px; padding-right: 20px"> <button class="delete-project-btn" data-project-id="{{ project.id }}">Delete</button> </td>
+                                <td> {{forloop.counter}} </td>
+                                <td class="wrapped-cell"> <a href="{% url 'manager_projectBugs' project_id=project.id %}">{{project.project_name}}</a> </td>
+                                <td> {{project.date_added.date}} </td>
+                                <td> {{project.bug_count}} </td>
+                                <td> <button class="delete-project-btn" data-project-id="{{ project.id }}">Delete</button> </td>
                             </tr>                   
                     {% endfor %} 
                 {% else %}
@@ -72,24 +72,26 @@
             });
         </script>
 
-        <p style="text-align: center;">Upload New Project <a href="{% url 'uploadProject' %}">Here</a>.</p>
+        <p class="boxed-paragraph" style="text-align: center;"><b>Upload New Project <a href="{% url 'uploadProject' %}">Here</a></b></p>
     </div>
        
     <br>
+    <br>
+    <br>
 
-    <div>
+    <div id="all_filed_bugs">
         <h3 style="text-align: center;">All Filed Bugs</h3>
         <table id="bug_table" border="1" style="margin: 10px auto; text-align: center;">
             <thead>
                 <tr>
-                    <th style="padding: 5px;">S. No.</th>
-                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Project Name</th>
-                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px;">Bug Title</th>
-                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px;">Impact</th>
-                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px;">Submitted By</th>
-                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px;">Date Submitted</th>
-                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px;">Status</th>
-                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px;">Delete</th>
+                    <th>S. No.</th>
+                    <th>Project Name</th>
+                    <th>Bug Title</th>
+                    <th>Impact</th>
+                    <th>Submitted By</th>
+                    <th>Date Submitted</th>
+                    <th>Status</th>
+                    <th>Delete</th>
                 </tr>
             </thead>
             
@@ -98,8 +100,8 @@
                     {% for bug in bugs %}  
                         <tr>
                             <td>{{forloop.counter}}</td>
-                            <td style="padding: 5px; padding-left: 20px; padding-right: 20px">{{bug.project.project_name}}</td>
-                            <td style="padding: 5px; padding-left: 20px; padding-right: 20px">{{bug.bug_title}}</td>
+                            <td class="wrapped-cell">{{bug.project.project_name}}</td>
+                            <td class="wrapped-cell">{{bug.bug_title}}</td>
                             <td>
                             {% if bug.impact == 'Severe'%}
                                 <span style="color:red;">{{bug.impact}}</span>
@@ -159,23 +161,25 @@
             });
             </script>
 
-        <p style="text-align: center;">Assign Bugs to developers <a href="{% url 'assignBug' %}">Here</a>.</p>
+        <p class="boxed-paragraph"  style="text-align: center;"><b>Assign Bugs to developers <a href="{% url 'assignBug' %}">Here</a></b></p>
     </div>
 
     <br>
+    <br>
+    <br>
 
-    <div>
+    <div id="all_assigned_bugs">
         <h3 style="text-align: center;">All Assigned Bugs</h3>
         <table id="bug_table" border="1" style="margin: 10px auto; text-align: center;">
             <thead>
                 <tr>
-                    <th style="padding: 5px;">S. No.</th>
-                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Project Name</th>
-                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px;">Bug Title</th>
-                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px;">Impact</th>
-                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px;">Assigned To</th>
-                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px;">Date Assigned</th>
-                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px;">Status</th>
+                    <th>S. No.</th>
+                    <th>Project Name</th>
+                    <th>Bug Title</th>
+                    <th>Impact</th>
+                    <th>Assigned To</th>
+                    <th>Date Assigned</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             
@@ -184,9 +188,8 @@
                     {% for bug in bugs_assigned %}  
                         <tr>
                             <td>{{forloop.counter}}</td>
-                            <td>{{bug.project.project_name}}</td>
-                            <td>{{bug.bug_title}}</td>
-                            
+                            <td class="wrapped-cell">{{bug.project.project_name}}</td>
+                            <td class="wrapped-cell">{{bug.bug_title}}</td>
                             <td>
                             {% if bug.impact == 'Severe'%}
                                 <span style="color:red;">{{bug.impact}}</span>
@@ -194,7 +197,6 @@
                                 <span style="color:blue;">{{bug.impact}}</span>
                             {% endif %}
                             </td>
-
                             <td>{{bug.assign_to.username}}</td>
                             <td>{{bug.date_assigned|date}}</td> <!--Applying date filter using | to submitted_date-->
                             <td>{{bug.status}}</td>
@@ -209,11 +211,6 @@
         </table>  
     </div>
 
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
-    <br>
+    <br><br><br><br><br><br><br>
+
 {% endblock content %}

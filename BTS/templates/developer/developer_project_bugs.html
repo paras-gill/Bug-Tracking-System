@@ -13,24 +13,24 @@
         <table id="project_table" border="1" style="margin: 10px auto; text-align: center;">
             <thead>
                 <tr>
-                    <th style="padding: 5px;">S. No.</th>
-                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Bug</th>
-                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Impact</th>
-                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Status</th>
-                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Submitted By</th>
-                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Date Submitted</th>
-                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Assigned To</th>
-                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Date Assigned</th>   
+                    <th >S. No.</th>
+                    <th>Bug</th>
+                    <th>Impact</th>
+                    <th>Status</th>
+                    <th>Submitted By</th>
+                    <th>Date Submitted</th>
+                    <th>Assigned To</th>
+                    <th>Date Assigned</th>   
                 </tr>
             </thead>
             <tbody> 
                 {% if bugs_of_a_project %}
                     {% for bug in bugs_of_a_project %}  
                     <tr>
-                        <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{forloop.counter}} </td>
-                        <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.bug_title}} </td>
+                        <td> {{forloop.counter}} </td>
+                        <td class="wrapped-cell"> {{bug.bug_title}} </td>
                         
-                        <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> 
+                        <td> 
                             {% if bug.impact == 'Severe'%}
                                 <span style="color:red;">{{bug.impact}}</span>
                             {% else %}
@@ -38,9 +38,9 @@
                             {% endif %}
                             </td>
                         
-                        <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.status}} </td>
+                        <td> {{bug.status}} </td>
                         
-                        <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> 
+                        <td> 
                             {% if bug.submitted_by == user %}
                             <span style="color:green;"><b>You</b></span>
                             {% else %}
@@ -48,9 +48,9 @@
                             {% endif %}     
                         </td>
                         
-                        <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.date_submitted|date}} </td>
+                        <td> {{bug.date_submitted|date}} </td>
                         
-                        <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px">
+                        <td>
                             {% if bug.assign_to == user %}
                             <span style="color:green;"><b>You</b></span>
                             {% else %}
@@ -58,7 +58,7 @@
                             {% endif %}   
                         </td>
                         
-                        <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.date_assigned|date}} </td>
+                        <td> {{bug.date_assigned|date}} </td>
                     </tr>                   
                     {% endfor %}
                 {% else %}
@@ -71,7 +71,7 @@
 
         <br>
         
-        <button onclick="goBack()">Go Back</button>  <!-- Display both buttons in same -->
+        <button onclick="goBack()">Go Back</button>  
 
         <script>
             function goBack() {

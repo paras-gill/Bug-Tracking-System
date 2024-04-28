@@ -16,16 +16,16 @@
             <table border="1" style="margin: 10px auto; text-align: center;">
                 <tbody>
                     <tr>
-                        <td style="padding: 10px;"><strong>Project</strong></td>
-                        <td>{{bug.project.project_name}}</td>
+                        <td style="height: 35px"><strong>Project</strong></td>
+                        <td class="wrapped-cell">{{bug.project.project_name}}</td>
                     </tr>
 
                     <tr>
-                        <td style="padding: 10px;"><strong>Bug</strong></td>
-                        <td>{{bug.bug_title}}</td>
+                        <td style="height: 35px"><strong>Bug</strong></td>
+                        <td class="wrapped-cell">{{bug.bug_title}}</td>
                     </tr>
                     <tr>
-                        <td style="padding: 10px;"><strong>Impact</strong></td>
+                        <td style="height: 35px"><strong>Impact</strong></td>
                         {% if bug.impact == 'Severe'%}
                         <td style="color:red;">{{bug.impact}}</td>
                         {% else %}
@@ -33,11 +33,11 @@
                         {% endif %}
                     </tr>
                     <tr>
-                        <td style="padding: 10px; padding-left: 20px; padding-right: 20px; height: 20px"><strong>Submitted by</strong></td>
-                        <td style="padding: 10px; padding-left: 20px; padding-right: 20px; height: 20px">{{bug.submitted_by.first_name}} {{bug.submitted_by.last_name}} ({{bug.submitted_by.username}})</td>
+                        <td style="height: 35px"><strong>Submitted by</strong></td>
+                        <td>{{bug.submitted_by.first_name}} {{bug.submitted_by.last_name}} ({{bug.submitted_by.username}})</td>
                     </tr>
                     <tr>
-                        <td style="padding: 10px; padding-left: 20px; padding-right: 20px; height: 20px"><strong>Current Status</strong></td>
+                        <td style="height: 35px"><strong>Current Status</strong></td>
                         <td> {{bug.status}}</td>
                     </tr>
                     <tr>
@@ -51,9 +51,9 @@
             <button type="submit" style="display: inline-block;" onclick="return confirmSubmit()">Resolve</button>
         </form> 
 
-        <span style="margin-left: 50px;"></span> <!-- Add space between buttons -->
+        <span style="margin-left: 50px;"></span> 
         
-        <button onclick="goBack()" style="display: inline;">Go Back</button>  <!-- Display both buttons in same -->
+        <button onclick="goBack()" style="display: inline;">Go Back</button> 
         
         <script>
             function goBack() {
