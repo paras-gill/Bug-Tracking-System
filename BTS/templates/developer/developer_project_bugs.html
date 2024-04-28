@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+
+{% block title %} Project Bugs {% endblock title %}
+
+{%block content%}
+
+    <h4 style="text-align: center;">All Bugs in <u>{{project_name}}</u> Project</h4>
+    
+    <p style="text-align: center;">Total number of bugs: <strong>{{bugs_of_a_project|length }}</strong></p>
+
+        
+    <div>
+        <table id="project_table" border="1" style="margin: 10px auto; text-align: center;">
+            <thead>
+                <tr>
+                    <th style="padding: 5px;">S.No.</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Bug</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Impact</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Status</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Submitted By</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Date Submitted</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Assigned To</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Date Assigned</th>   
+                </tr>
+            </thead>
+            <tbody> 
+                    {% for bug in bugs_of_a_project %}  
+                            <tr>
+                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{forloop.counter}} </td>
+                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.bug_title}} </td>
+                                
+                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> 
+                                    {% if bug.impact == 'Severe'%}
+                                        <span style="color:red;">{{bug.impact}}</span>
+                                    {% else %}
+                                        <span style="color:blue;">{{bug.impact}}</span>
+                                    {% endif %}
+                                    </td>
+                                
+                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.status}} </td>
+                                
+                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> 
+                                    {% if bug.submitted_by == user %}
+                                    <span style="color:green;"><b>You</b></span>
+                                    {% else %}
+                                    {{bug.submitted_by}}
+                                    {% endif %}     
+                                </td>
+                                
+                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.date_submitted|date}} </td>
+                                
+                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px">
+                                    {% if bug.assign_to == user %}
+                                    <span style="color:green;"><b>You</b></span>
+                                    {% else %}
+                                    {{bug.assign_to}}
+                                    {% endif %}   
+                                </td>
+                                
+                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.date_assigned|date}} </td>
+                            </tr>                   
+                    {% endfor %}      
+            </tbody>
+        </table>
+
+        <br>
+        
+        <button onclick="goBack()">Go Back</button>  <!-- Display both buttons in same -->
+
+        <script>
+            function goBack() {
+            window.location.href = "{% url 'developerHome' %}";
+            }
+        </script>
+
+    </div>
+
+{% endblock %}

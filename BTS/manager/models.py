@@ -10,7 +10,6 @@ class Project(models.Model):
     date_added = models.DateTimeField(default=timezone.now)
     bug_count = models.IntegerField(default=0)
 
-    
     def __str__(self):
         return self.project_name
     
@@ -40,6 +39,7 @@ class Bug(models.Model):
 
     assign_to = models.ForeignKey(User, on_delete=models.CASCADE, related_name='assigned_bugs', null=True, blank=True)
     date_assigned = models.DateTimeField(null=True, blank=True)
+    resolve = models.BooleanField(default=False)
 
     def __str__(self):
         return self.bug_title

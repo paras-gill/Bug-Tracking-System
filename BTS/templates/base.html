@@ -20,10 +20,9 @@
     <body>
         <h1>Bug Tracking System</h1>
         {%  if user.is_authenticated %}
-            <p> 
-                <a href="{% url 'logout' %}">log out</a>
-                <br><br><br>
-                <span style="text-align: center; font-size: larger;">Welcome! {{ request.user.first_name }} {{ request.user.last_name }} [{{request.user.role}}].</span>
+            <p>     
+                {{user.first_name}} {{user.last_name}}<br><a href="{% url 'logout' %}">log out</a>
+                <br><br><br>   
             </p>
         {% endif %}
 

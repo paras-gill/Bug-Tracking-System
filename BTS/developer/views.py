@@ -1,10 +1,33 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from . import forms
 from manager.models import Project, Bug
 from django.db.models import F
 from django.utils import timezone
-from django.forms import formset_factory
+
+
+
+@login_required
+def resolve_bug(request, bug_id):
+    bug = Bug.objects.get(id=bug_id)
+    
+    if request.method == 'POST':
+        form=forms.ChangeStatusForm(request.POST)
+        if form.is_valid():  
+            bug.status='Closed'
+            project=Project.objects.get(project_name=bug.project.project_name)
+            project.bug_count=F('bug_count')-1
+            bug.save()
+            project.save()
+            return render(request, 'developer/success.html', {'bug' : bug})
+    else:    
+        form=forms.ChangeStatusForm()
+    context={
+        'bug' : bug,
+        'form' : form
+    }
+    return render (request, 'developer/change_status.html', context)
+
 
 @login_required
 def developer_home(request):
@@ -16,59 +39,18 @@ def developer_home(request):
     
     bugs_submitted=Bug.objects.filter(submitted_by=request.user.pk)
     bugs_submitted_open=Bug.objects.filter(submitted_by=request.user.pk, status='Open')
-      
-    ChangeStatusFormSet = formset_factory(forms.ChangeStatusForm, extra=len(bugs_assigned))
-    formset = ChangeStatusFormSet() 
     
-    zipped_bugsassigned_formset=zip(bugs_assigned, formset)
+    message=''
     context={
         'projects' : projects, 
         'bugs_assigned' : bugs_assigned, 
         'bugs_assigned_open' : bugs_assigned_open,
         'bugs_submitted' : bugs_submitted,
-        'bugs_submitted_open' : bugs_submitted_open,
-        'zipped_bugsassigned_formset' : zipped_bugsassigned_formset
+        'bugs_submitted_open' : bugs_submitted_open, 
+        'message' : message
         }
-    
-    message=''
-
-    if request.method == 'GET':           
-        return render(request, 'developer/developer_home.html', context)
-    
-    elif request.method=='POST':
-        formset = ChangeStatusFormSet(request.POST)  # Binding the POST data to the formset
-        #print(formset.is_valid())
-
-        if formset.is_valid():
-            closed_count=0  # Count of closed bug status
-            for bug, form in zip(bugs_assigned, formset):
-                if form.clean['resolve']==True:  # i.e. when checkbox checked, then we have to update its status 
-                    closed_count+=1
-                    bug.update(status='Closed')
-                    project=Project.objects.get(pk=bug.project)
-                    project.update(bug_count=F('bug_count')-1)
-                    
-            if closed_count == 1:
-                message = f"{closed_count} bug has been resolved"
-            else:
-                message = f"{closed_count} bugs have been resolved"
-        
-        else:
-            print('formset is invalid')
-        
-        '''
-        else:
-            # Formset is invalid, handle errors
-            print('formset is invalid')
-            for form in formset:
-                if form.errors:
-                    # Access errors for the current form
-                    print(form.errors)
-        '''
-
-        context['message']=message
-        return render(request, 'developer/developer_home.html', context)
-
+               
+    return render(request, 'developer/developer_home.html', context)
 
 
 @login_required
@@ -90,10 +72,15 @@ def file_bug(request):
     form = forms.BugForm()
     return render(request, 'developer/file_bug.html', {'form': form, 'message' : message})
 
+
 @login_required
-def change_status(request):
-    pass
-    #return redirect('developerHome')
-
-
-
+def developer_project_bugs(request, project_id ):
+    bugs_of_a_project=Bug.objects.filter(project=project_id)
+    project_name=Project.objects.get(id=project_id).project_name
+    user=request.user
+    context={
+        'bugs_of_a_project' : bugs_of_a_project,
+        'project_name' : project_name,
+        'user' : user
+    }
+    return render(request, 'developer/developer_project_bugs.html', context)

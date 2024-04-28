@@ -3,6 +3,8 @@
 {% block title %} Manager Home {% endblock title %}
 
 {% block content %}
+    <p style="text-align: center; font-size: larger;">Welcome {{user.role}}</p>
+
     <br>
 
     <div>
@@ -23,7 +25,7 @@
                     {% for project in projects %}  
                             <tr>
                                 <td style="padding: 5px;"> {{forloop.counter}} </td>
-                                <td style="padding: 5px;"> {{project.project_name}} </td>
+                                <td style="padding: 5px;"> <a href="{% url 'manager_projectBugs' project_id=project.id %}">{{project.project_name}}</a> </td>
                                 <td style="padding: 5px;"> {{project.date_added.date}} </td>
                                 <td style="padding: 5px;"> {{project.bug_count}} </td>
                                 <td style="padding: 5px;"> <button class="delete-project-btn" data-project-id="{{ project.id }}">Delete</button> </td>
@@ -64,11 +66,9 @@
             });
         </script>
 
-    
         <p style="text-align: center;">Upload New Project <a href="{% url 'uploadProject' %}">Here</a>.</p>
     </div>
-    
-    
+       
     <br>
 
     <div>
@@ -80,8 +80,8 @@
                     <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Project Name</th>
                     <th style="padding: 5px; padding-left: 20px; padding-right: 20px;">Bug Title</th>
                     <th style="padding: 5px; padding-left: 20px; padding-right: 20px;">Impact</th>
-                    <th style="padding: 5px;">Submitted By</th>
-                    <th style="padding: 5px;">Date Submitted</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px;">Submitted By</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px;">Date Submitted</th>
                     <th style="padding: 5px; padding-left: 20px; padding-right: 20px;">Status</th>
                     <th style="padding: 5px; padding-left: 20px; padding-right: 20px;">Delete</th>
                 </tr>
@@ -93,7 +93,13 @@
                                 <td>{{forloop.counter}}</td>
                                 <td>{{bug.project.project_name}}</td>
                                 <td>{{bug.bug_title}}</td>
-                                <td>{{bug.impact}}</td>
+                                <td>
+                                {% if bug.impact == 'Severe'%}
+                                    <span style="color:red;">{{bug.impact}}</span>
+                                {% else %}
+                                    <span style="color:blue;">{{bug.impact}}</span>
+                                {% endif %}
+                                </td>
                                 <td>{{bug.submitted_by.username}}</td>
                                 <td>{{bug.date_submitted|date}}</td> <!--Applying date filter using | to submitted_date-->
                                 <td>{{bug.status}}</td>
@@ -111,31 +117,85 @@
                     var bugId = $(this).data('bug-id');
                     console.log('Bug ID:', bugId); // Log bugId value
                     var rowToRemove = $(this).closest('tr'); // Get the parent row of the delete button
-                    //console.log('Yes I am reaching this line');
+                    var bugStatus = rowToRemove.find('td:eq(6)').text().trim(); // Get the bug count from the fourth column
                     // Send Ajax request to delete bug
-                    $.ajax({   // This function in jQuery is used to perform an asynchronous HTTP (Ajax) request. It allows you to send and receive data from a server without refreshing the entire webpage.
-                        
-                        // Now below two lines are responsible for sening request to view defined at this url
-                        url: '/deleteBug/' + bugId + '/',  // url to which AJAX request is sent
-                        type: 'GET',  // HTTP method used for the request
-                        
-                        // Below code is reponsible for doing action depending on the response. Respective function gets executed (success or error). 
-                        success: function(response) {    // Specifies function to be executed if the request is successful. The response parameter contains the data returned from the server.
-                            if (response.success) {  //This checks if success property of response object is True.
-                                rowToRemove.remove(); // Remove the row from the HTML table
-                                console.log('Row deleted successfully');
-                            } else {
-                                console.error('Failed to delete bug:', response);
+
+                    if (bugStatus === 'Close') {
+                        $.ajax({   // This function in jQuery is used to perform an asynchronous HTTP (Ajax) request. It allows you to send and receive data from a server without refreshing the entire webpage.
+                            
+                            // Now below two lines are responsible for sening request to view defined at this url
+                            url: '/deleteBug/' + bugId + '/',  // url to which AJAX request is sent
+                            type: 'GET',  // HTTP method used for the request
+                            
+                            // Below code is reponsible for doing action depending on the response. Respective function gets executed (success or error). 
+                            success: function(response) {    // Specifies function to be executed if the request is successful. The response parameter contains the data returned from the server.
+                                if (response.success) {  //This checks if success property of response object is True.
+                                    rowToRemove.remove(); // Remove the row from the HTML table
+                                    console.log('Row deleted successfully');
+                                } else {
+                                    console.error('Failed to delete bug:', response);
+                                }
+                            },
+                            error: function(xhr, textStatus, errorThrown) {  // function to be executed if the request encounters an error.    
+                                console.error('Error deleting bug:', errorThrown);
                             }
-                        },
-                        error: function(xhr, textStatus, errorThrown) {  // function to be executed if the request encounters an error.    
-                            console.error('Error deleting bug:', errorThrown);
-                        }
-                    });
+                        });
+                } else {    // If bugStaus is 'Open', display this alert message
+                    alert('You cannot delete a bug which is yet to be resolved');
+                }
                 });
             });
             </script>
 
-        <p style="text-align: center;">Click <a href="{% url 'assignBug' %}">Here</a> to Assign Bugs to Developers.</p>
+        <p style="text-align: center;">Assign Bugs to developers <a href="{% url 'assignBug' %}">Here</a>.</p>
     </div>
+
+    <br>
+
+    <div>
+        <h3 style="text-align: center;">All Assigned Bugs</h3>
+        <table id="bug_table" border="1" style="margin: 10px auto; text-align: center;">
+            <thead>
+                <tr>
+                    <th style="padding: 5px;">S.No.</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Project Name</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px;">Bug Title</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px;">Impact</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px;">Assigned To</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px;">Date Assigned</th>
+                    <th style="padding: 5px; padding-left: 20px; padding-right: 20px;">Status</th>
+                </tr>
+            </thead>
+            
+            <tbody>   
+                    {% for bug in bugs_assigned %}  
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{bug.project.project_name}}</td>
+                                <td>{{bug.bug_title}}</td>
+                               
+                                <td>
+                                {% if bug.impact == 'Severe'%}
+                                    <span style="color:red;">{{bug.impact}}</span>
+                                {% else %}
+                                    <span style="color:blue;">{{bug.impact}}</span>
+                                {% endif %}
+                                </td>
+
+                                <td>{{bug.assign_to.username}}</td>
+                                <td>{{bug.date_assigned|date}}</td> <!--Applying date filter using | to submitted_date-->
+                                <td>{{bug.status}}</td>
+                            </tr>                   
+                    {% endfor %}              
+            </tbody>
+        </table>  
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
 {% endblock content %}

@@ -15,9 +15,18 @@
 {% endif %}
 
 
-<form style="text-align: center;" method="post">
+<form style="text-align: center; display: inline;" method="post">
     {% csrf_token %}
     {{ form.as_p }}
     <button type="submit">Upload</button>
 </form>
+
+<span style="margin-left: 50px;"></span> <!-- Add space between buttons -->
+<button onclick="goBack()" style="display: inline;">Go Back</button>  <!-- Display both buttons in same -->
+
+<script>
+    function goBack() {
+    window.location.href = "{% url 'managerHome' %}";
+    }
+</script>
 {% endblock content %}

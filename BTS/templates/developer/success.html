@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %} Success {% endblock title %}
+
+{% block content %}
+    
+    <div style="text-align: center;">
+        <p><strong>{{bug.bug_title}}</strong> bug of <strong>{{bug.project.project_name}}</strong> project has been closed.</p>
+        <br>
+        <p>Click <a href="{% url 'developerHome' %}">here</a> to go back to homepage.<p>
+    </div>
+    
+{% endblock content %}

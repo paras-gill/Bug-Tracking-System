@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% block title %} Change Status {% endblock title %}
+
+{% block content %}
+    <div>
+        <h3 style="text-align: center;"><u> Resolve Bug </u></h3>
+    </div>
+    
+    <br>
+    
+
+    <div style="text-align: center;">
+        <form id = "changeStatusnForm" method = "post" style = "display: inline;" >
+            {% csrf_token %}
+            <table border="1" style="margin: 10px auto; text-align: center;">
+                <tbody>
+                    <tr>
+                        <td style="padding: 10px;"><strong>Project</strong></td>
+                        <td>{{bug.project.project_name}}</td>
+                    </tr>
+
+                    <tr>
+                        <td style="padding: 10px;"><strong>Bug</strong></td>
+                        <td>{{bug.bug_title}}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px;"><strong>Impact</strong></td>
+                        {% if bug.impact == 'Severe'%}
+                        <td style="color:red;">{{bug.impact}}</td>
+                        {% else %}
+                        <td style="color:blue;">{{bug.impact}}</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; padding-left: 20px; padding-right: 20px; height: 20px"><strong>Submitted by</strong></td>
+                        <td style="padding: 10px; padding-left: 20px; padding-right: 20px; height: 20px">{{bug.submitted_by.first_name}} {{bug.submitted_by.last_name}} ({{bug.submitted_by.username}})</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 10px; padding-left: 20px; padding-right: 20px; height: 20px"><strong>Current Status</strong></td>
+                        <td> {{bug.status}}</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0px;"><strong>Change Status</strong></td>
+                        <td style="padding: 0px;"> {{ form.as_p }}</td>
+                    </tr>
+                </tbody>    
+            </table>
+
+            <br>
+            <button type="submit" style="display: inline-block;" onclick="return confirmSubmit()">Resolve</button>
+        </form> 
+
+        <span style="margin-left: 50px;"></span> <!-- Add space between buttons -->
+        
+        <button onclick="goBack()" style="display: inline;">Go Back</button>  <!-- Display both buttons in same -->
+        
+        <script>
+            function goBack() {
+            window.location.href = "{% url 'developerHome' %}";
+            }
+
+            function confirmSubmit() {
+                var confirmation = confirm("Are you sure you want to mark this bug as closed? You won't be able to change its status later.\n\nIf this bug is still unresolved, You'll have to file this bug again.");
+                if (confirmation) {
+                    document.getElementById("changeStatusnForm").submit();
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        </script>
+    
+    </div>
+    
+{% endblock content %}
