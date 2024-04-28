@@ -23,6 +23,14 @@ Current developers and manager signed up can be found in ![users.xlsx](users.xls
 ![Developer Portal](screenshots/developer_portal.png)
 *Developer portal*
 
+## Tech/Framework Used
+
+- Django
+- MySql
+- Html
+- CSS
+- Javascript
+- AJAX
 
 ## Installation
 
