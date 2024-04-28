@@ -60,46 +60,16 @@ def delete_project(request, project_id):
     return JsonResponse({'success': False})
 
 
-@permission_required('manager.delete_bug', raise_exception=True)  # 'manager.delete_bug' indicates that the user needs the delete_bug permission in the manager app to perform the delete operation on bugs.
+@permission_required('manager.delete_bug', raise_exception=True)  # 'manager.delete_bug' i.e. user needs the delete_bug permission in the manager app to perform the del op.
 def delete_bug(request, bug_id):
-    print('View function is accessible')
     if not request.user.has_perm('manager.delete_bug'):
-        #print('No Permission')
         return JsonResponse({'success': False, 'error': 'Permission denied'}, status=403)
         
-    #print('Yes Permission')
     if request.method == 'GET' or request.method == 'POST':
         bug = Bug.objects.get(id=bug_id)
-        related_project = bug.project
+        #related_project = bug.project
         bug.delete()
-        related_project.bug_count = F('bug_count') - 1
-        related_project.save()
+        #related_project.bug_count = F('bug_count') - 1
+        #related_project.save()
         return JsonResponse({'success': True})
     return JsonResponse({'success': False})
-
-'''
-
-    if request.method == 'GET' or request.method == 'POST':
-        
-        try:
-            # Retrieve the bug object to get the related project
-            #bug = get_object_or_404(Bug, pk=bug_id)
-            bug = Bug.objects.get(id=bug_id)
-            related_project = bug.project
-            
-            # Delete the bug object
-            bug.delete()
-            
-            # Decrement the bug_count of the related project using F() expression
-            related_project.bug_count = F('bug_count') - 1
-            related_project.save()
-            
-            return JsonResponse({'success': True})
-        
-        except Bug.DoesNotExist:
-            return JsonResponse({'success': False, 'error': 'Bug not found'}, status=404)
-        except Exception as e:
-            return JsonResponse({'success': False, 'error': str(e)}, status=500)
-    else:
-        return JsonResponse({'success': False, 'error': 'Invalid request method'}, status=405)
-'''      

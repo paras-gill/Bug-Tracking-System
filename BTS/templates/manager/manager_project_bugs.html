@@ -13,7 +13,7 @@
         <table id="project_table" border="1" style="margin: 10px auto; text-align: center;">
             <thead>
                 <tr>
-                    <th style="padding: 5px;">S.No.</th>
+                    <th style="padding: 5px;">S. No.</th>
                     <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Bug</th>
                     <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Impact</th>
                     <th style="padding: 5px; padding-left: 20px; padding-right: 20px">Status</th>
@@ -24,24 +24,30 @@
                 </tr>
             </thead>
             <tbody> 
+                {% if bugs_of_a_project%}
                     {% for bug in bugs_of_a_project %}  
-                            <tr>
-                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{forloop.counter}} </td>
-                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.bug_title}} </td>
-                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> 
-                                    {% if bug.impact == 'Severe'%}
-                                        <span style="color:red;">{{bug.impact}}</span>
-                                    {% else %}
-                                        <span style="color:blue;">{{bug.impact}}</span>
-                                    {% endif %}
-                                    </td>
-                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.status}} </td>
-                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.submitted_by}} </td>
-                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.date_submitted|date}} </td>
-                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.assign_to}} </td>
-                                <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.date_assigned|date}} </td>
-                            </tr>                   
-                    {% endfor %}      
+                    <tr>
+                        <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{forloop.counter}} </td>
+                        <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.bug_title}} </td>
+                        <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> 
+                            {% if bug.impact == 'Severe'%}
+                                <span style="color:red;">{{bug.impact}}</span>
+                            {% else %}
+                                <span style="color:blue;">{{bug.impact}}</span>
+                            {% endif %}
+                            </td>
+                        <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.status}} </td>
+                        <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.submitted_by}} </td>
+                        <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.date_submitted|date}} </td>
+                        <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.assign_to}} </td>
+                        <td style="padding: 5px; padding-left: 20px; padding-right: 20px; height: 20px"> {{bug.date_assigned|date}} </td>
+                    </tr>                   
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="8" style="height: 30px;">No bugs</td>
+                    </tr>
+                {% endif %}      
             </tbody>
         </table>
 
