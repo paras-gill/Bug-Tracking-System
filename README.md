@@ -10,11 +10,23 @@ This Django project implements an authentication system where users can log in a
 
 The project uses a MySQL database as the default database in Django settings. It includes normalized model classes and a user flow to determine which users have access to specific functionalities. Many other database management systems can also be integrated with this project; more about that can be found here: https://docs.djangoproject.com/en/5.0/topics/install/#database-installation
 
+## Screenshots
+
+
+![Login Page](screenshots/login_page.png)
+
+
+![Developer Portal](screenshots/developer_portal.png)
+
+
+![Manager Portal](screenshots/manager_portal.png)
+
+
 ## Installation
 
 1. Clone the repository to your local machine.
    ```bash
-   git clone https://github.com/your/repository.git
+   git clone https://github.com/paras-gill/Bug-Tracking-System.git
    ```
 
 2. Install Python and Django if not already installed.
